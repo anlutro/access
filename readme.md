@@ -1,4 +1,4 @@
-# Access - RBAC for Laravel 4
+# Access - RBAC for Laravel 4 [![Build Status](https://travis-ci.org/anlutro/access.png?branch=master)](https://travis-ci.org/anlutro/access)
 
 My stab at an RBAC system for Laravel 4.
 
