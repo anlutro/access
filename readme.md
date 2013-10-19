@@ -28,9 +28,9 @@ Copy migrations from `vendor/c/access/src/migrations` to your app's migration di
 Because you probably want to put your own functions and fields on the User model/table, you create the user model yourself. There are two ways to do this and ensure it works with the RBAC system - inheritance (extending a base class) or traits.
 
 ```php
-class MyUser extends c\Access\Models\User {}
+class MyUser extends anlutro\Access\Models\User {}
 
-class MyUser extends Eloquent implements c\Access\Interfaces\SubjectInterface
+class MyUser extends Eloquent implements anlutro\Access\Interfaces\SubjectInterface
 {
 	use anlutro\Access\Traits\UserSubject;
 }
@@ -42,9 +42,9 @@ You are responsible for creating the user table. Remember to update your `app/co
 Again you can do this with inheritance or traits:
 
 ```php
-class MyResource extends c\Access\Models\Resource {}
+class MyResource extends anlutro\Access\Models\Resource {}
 
-class MyResource extends Eloquent implements c\Access\Interfaces\ResourceInterface
+class MyResource extends Eloquent implements anlutro\Access\Interfaces\ResourceInterface
 {
 	use anlutro\Access\Traits\ResourceSubject;
 }
