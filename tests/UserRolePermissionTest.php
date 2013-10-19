@@ -44,4 +44,36 @@ class UserRolePermissionTest extends TestCase
 		$this->assertNotNull($perm);
 		$this->assertFalse($perm->allow);
 	}
+
+	public function testUserRoleDenyPermissionGetsPrecedence()
+	{
+		$user = User::create(['name' => 'user']);
+		$role1 = Role::create(['name' => 'role 1']);
+		$role2 = Role::create(['name' => 'role 2']);
+		$perm = Permission::create(['name' => 'permission']);
+
+		$user->addRole($role1);
+		$user->addRole($role2);
+		$role1->allowPermission($perm);
+		$role2->denyPermission($perm);
+
+		$perm = $user->getPermission($perm);
+		$this->assertNotNull($perm);
+		$this->assertFalse($perm->allow);
+	}
+
+	public function testUserPermissionComesBeforeRolePermission()
+	{
+		$user = User::create(['name' => 'user']);
+		$role = Role::create(['name' => 'role']);
+		$perm = Permission::create(['name' => 'permission']);
+
+		$user->addRole($role);
+		$role->allowPermission($perm);
+		$user->denyPermission($perm);
+
+		$perm = $user->getPermission($perm);
+		$this->assertNotNull($perm);
+		$this->assertFalse($perm->allow);
+	}
 }
