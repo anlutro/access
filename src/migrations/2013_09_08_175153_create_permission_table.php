@@ -1,4 +1,11 @@
 <?php
+/**
+ * Access - Laravel 4 RBAC
+ *
+ * @author    Andreas Lutro <anlutro@gmail.com>
+ * @license   http://opensource.org/licenses/MIT
+ * @package   anlutro/access
+ */
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;

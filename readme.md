@@ -6,6 +6,10 @@ This is probably extremely query intensive and I have not made many attempts to 
 
 I wrote this with the intention of using it on small systems with a low number of concurrent users. It is made for systems where you need to control permissions on row-basis rather than just some generalized roles and permissions.
 
+## Contribution
+
+Bug reports, suggestions and code improvements are highly welcome. Use the github issue system! If you just want to have a chat, look for me in #laravel on freenode.
+
 ## Installation
 
 ### Requirements
@@ -13,15 +17,12 @@ PHP 5.4 or higher
 Laravel 4.1 or higher
 
 ### Install
-`composer require c/access:1.0.*`
+`composer require anlutro/access`
+
+Check packagist.org or the github tag list for the latest stable release, or use dev-master if you like living on the edge.
 
 ### Copy migrations
 Copy migrations from `vendor/c/access/src/migrations` to your app's migration directory. Alternatively, run them with `php artisan migrate --package c/access` if you just want to play around with the system - copying the migration files manually is recommended for production setups.
-
-### Publish the package config
-`php artisan config:publish c/access`
-
-Open the published config file and put in your user model's fully qualified class name.
 
 ### Create your user model
 Because you probably want to put your own functions and fields on the User model/table, you create the user model yourself. There are two ways to do this and ensure it works with the RBAC system - inheritance (extending a base class) or traits.
@@ -35,7 +36,7 @@ class MyUser extends Eloquent implements c\Access\Interfaces\SubjectInterface
 }
 ```
 
-You are responsible for creating the user table.
+You are responsible for creating the user table. Remember to update your `app/config/auth.php` file to reflect your model.
 
 ### Create one or more resource models
 Again you can do this with inheritance or traits:
@@ -110,3 +111,7 @@ use anlutro\Access\Access;
 Access::allowed('show', $resource);
 Access::allowed('create', $resource);
 ```
+
+## License
+
+The contents of this repository is released under the [MIT license](http://opensource.org/licenses/MIT).

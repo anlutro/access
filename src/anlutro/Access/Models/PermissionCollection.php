@@ -1,4 +1,12 @@
 <?php
+/**
+ * Access - Laravel 4 RBAC
+ *
+ * @author    Andreas Lutro <anlutro@gmail.com>
+ * @license   http://opensource.org/licenses/MIT
+ * @package   anlutro/access
+ */
+
 namespace anlutro\Access\Models;
 
 use Illuminate\Support\Collection;
