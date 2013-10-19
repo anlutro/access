@@ -22,7 +22,7 @@ Laravel 4.1 or higher
 Check packagist.org or the github tag list for the latest stable release, or use dev-master if you like living on the edge.
 
 ### Copy migrations
-Copy migrations from `vendor/c/access/src/migrations` to your app's migration directory. Alternatively, run them with `php artisan migrate --package c/access` if you just want to play around with the system - copying the migration files manually is recommended for production setups.
+Copy migrations from `vendor/anlutro/access/sranlutro/migrations` to your app's migration directory. Alternatively, run them with `php artisan migrate --package anlutro/access` if you just want to play around with the system - copying the migration files manually is recommended for production setups.
 
 ### Create your user model
 Because you probably want to put your own functions and fields on the User model/table, you create the user model yourself. There are two ways to do this and ensure it works with the RBAC system - inheritance (extending a base class) or traits.
