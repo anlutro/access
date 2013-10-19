@@ -122,4 +122,13 @@ class PermissionResourceTest extends TestCase
 		$this->assertTrue($res->requiresPermissionTo('edit', $perm1));
 		$this->assertTrue($res->requiresPermissionTo('edit', $perm1));
 	}
+
+	public function testNewResourcePermissions()
+	{
+		$perm = Permission::create(['name' => 'permission']);
+		$res = new TestResource;
+		TestResource::addGlobalPermissionTo('show', $perm);
+
+		$this->assertTrue($res->requiresPermissionTo('show', $perm));
+	}
 }
