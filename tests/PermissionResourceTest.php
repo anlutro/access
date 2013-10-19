@@ -23,6 +23,17 @@ class PermissionResourceTest extends TestCase
 		$this->assertTrue($res->requiresPermissionTo('show', $perm));
 	}
 
+	public function testGlobalPermissionAppliesToAllInstances()
+	{
+		$res1 = TestResource::create(['name' => 'resource']);
+		$res2 = TestResource::create(['name' => 'resource']);
+		$perm = Permission::create(['name' => 'permission']);
+
+		TestResource::addGlobalPermissionTo('show', $perm);
+		$this->assertTrue($res1->requiresPermissionTo('show', $perm));
+		$this->assertTrue($res2->requiresPermissionTo('show', $perm));
+	}
+
 	public function testAttachResourceLocalPermission()
 	{
 		$res = TestResource::create(['name' => 'resource']);
