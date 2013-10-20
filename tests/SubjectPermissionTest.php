@@ -94,6 +94,32 @@ class UserPermissionTest extends TestCase
 	}
 
 	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testUserPermissionActionAttribute()
+	{
+		$user = TestUser::create(['name' => 'user']);
+		$perm = Permission::create(['name' => 'permission']);
+		$user->allowPermission($perm);
+
+		$perm = $user->mergedPermissions()->first();
+		$var = $perm->action;
+	}
+
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testRolePermissionActionAttribute()
+	{
+		$role = Role::create(['name' => 'role']);
+		$perm = Permission::create(['name' => 'permission']);
+		$role->allowPermission($perm);
+
+		$perm = $role->mergedPermissions()->first();
+		$var = $perm->action;
+	}
+
+	/**
 	 * For some reason using this function causes an infinite loop. Keeping it
 	 * in case I can figure out what the cause is.
 	 */

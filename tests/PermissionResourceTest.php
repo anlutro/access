@@ -22,9 +22,6 @@ class PermissionResourceTest extends TestCase
 		$res->addPermissionTo('show', $perm1);
 		$res->addPermissionTo('edit', $perm2);
 
-		// var_dump($res->permissionsRequiredTo('edit')->toArray());
-		// die();
-
 		$this->assertFalse($res->requiresPermissionTo('edit', $perm1),
 			'Asserting that [edit] action does NOT require permission [perm1]');
 		$this->assertFalse($res->requiresPermissionTo('show', $perm2),
@@ -177,5 +174,28 @@ class PermissionResourceTest extends TestCase
 		TestResource::addGlobalPermissionTo('show', $perm);
 
 		$this->assertTrue($res->requiresPermissionTo('show', $perm));
+	}
+
+	public function testActionAttributeOnPermission()
+	{
+		$res = TestResource::create(['name' => 'resource']);
+		$perm = Permission::create(['name' => 'permission']);
+		$res->addPermissionTo('show', $perm);
+
+		$perm = $res->mergedPermissions()->first();
+		$this->assertEquals('show', $perm->action);
+	}
+
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testAccessAllowOnResourcePermission()
+	{
+		$res = TestResource::create(['name' => 'resource']);
+		$perm = Permission::create(['name' => 'permission']);
+		$res->addPermissionTo('show', $perm);
+
+		$perm = $res->mergedPermissions()->first();
+		$var = $perm->allow;
 	}
 }
