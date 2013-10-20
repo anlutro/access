@@ -77,7 +77,6 @@ trait Resource
 			->newPivotStatement()
 			->where('action', $action);
 
-
 		if ($permission !== null)
 			$query->where('permission_id', $permission->getKey());
 
@@ -87,18 +86,22 @@ trait Resource
 	/**
 	 * {@inheritdoc}
 	 */
-	public function requiresPermissionTo($action, Permission $permission)
+	public function requiresPermissionTo($action, Permission $permission = null)
 	{
-		$permCount = $this->permissions()
+		$query = $this->permissions()
 			->newPivotStatement()
 			->where('action', $action)
 			->where('resource_type', get_class($this))
 			->where(function($query) use($permission) {
-				$query->where('resource_id', $permission->id)
+				$query->where('resource_id', $this->getKey())
 					->orWhereNull('resource_id');
-			})->count();
+			});
 
-		return $permCount > 0;
+		if ($permission !== null) {
+			$query->where('permission_id', $permission->getKey());
+		}
+		
+		return $query->count() > 0;
 	}
 
 	/**

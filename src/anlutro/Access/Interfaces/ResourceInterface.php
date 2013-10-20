@@ -52,12 +52,13 @@ interface ResourceInterface
 	public function removePermissionTo($action, Permission $permission);
 
 	/**
-	 * Check if a permission is required to do an action on this resource.
+	 * Check if a permission is required to do an action on this resource. If
+	 * $permission is not provided, will check if any permissions are required.
 	 *
 	 * @param  string     $action     
-	 * @param  Permission $permission 
+	 * @param  Permission $permission (optional)
 	 */
-	public function requiresPermissionTo($action, Permission $permission);
+	public function requiresPermissionTo($action, Permission $permission = null);
 
 	/**
 	 * Get the permission(s) required for an action on this resource type.

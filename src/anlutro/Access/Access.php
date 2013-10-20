@@ -33,7 +33,7 @@ class Access
 		if (Auth::check()) {
 			return Auth::user()->hasAccessTo($action, $resource);
 		} else {
-			return $resource->permissionsRequiredTo($action)->count() <= 0;
+			return !$resource->requiresPermissionTo($action);
 		}
 	}
 
