@@ -8,14 +8,13 @@
  */
 
 use anlutro\Access\Models\Role;
-use anlutro\Access\Models\User;
 use anlutro\Access\Models\Permission;
 
 class UserRolePermissionTest extends TestCase
 {
 	public function testUserRolePermissionAllow()
 	{
-		$user = User::create(['name' => 'user']);
+		$user = TestUser::create(['name' => 'user']);
 		$role = Role::create(['name' => 'role']);
 		$perm = Permission::create(['name' => 'permission']);
 		
@@ -31,7 +30,7 @@ class UserRolePermissionTest extends TestCase
 
 	public function testUserRolePermissionDeny()
 	{
-		$user = User::create(['name' => 'user']);
+		$user = TestUser::create(['name' => 'user']);
 		$role = Role::create(['name' => 'role']);
 		$perm = Permission::create(['name' => 'permission']);
 		
@@ -47,7 +46,7 @@ class UserRolePermissionTest extends TestCase
 
 	public function testUserRoleDenyPermissionGetsPrecedence()
 	{
-		$user = User::create(['name' => 'user']);
+		$user = TestUser::create(['name' => 'user']);
 		$role1 = Role::create(['name' => 'role 1']);
 		$role2 = Role::create(['name' => 'role 2']);
 		$perm = Permission::create(['name' => 'permission']);
@@ -64,7 +63,7 @@ class UserRolePermissionTest extends TestCase
 
 	public function testUserPermissionComesBeforeRolePermission()
 	{
-		$user = User::create(['name' => 'user']);
+		$user = TestUser::create(['name' => 'user']);
 		$role = Role::create(['name' => 'role']);
 		$perm = Permission::create(['name' => 'permission']);
 

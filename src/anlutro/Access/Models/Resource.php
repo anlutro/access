@@ -13,6 +13,9 @@ use anlutro\Access\Interfaces\ResourceInterface;
 use anlutro\Access\Traits\Resource as ResourceTrait;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Abstract class that can easily be extended to have a resource model.
+ */
 abstract class Resource extends Model implements ResourceInterface
 {
 	use ResourceTrait;

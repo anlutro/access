@@ -8,22 +8,15 @@
  */
 
 use anlutro\Access\Models\Role;
-use anlutro\Access\Models\User;
 use anlutro\Access\Models\Permission;
 use anlutro\Access\Access;
 use Illuminate\Support\Facades\Auth;
 
 class FacadeTest extends TestCase
 {
-	public function tearDown()
-	{
-		parent::tearDown();
-		Mockery::close();
-	}
-
 	public function testAccessDeniedWhenUserDenied()
 	{
-		$user = User::create(['name' => 'user']);
+		$user = TestUser::create(['name' => 'user']);
 		$perm = Permission::create(['name' => 'permission']);
 		$res = TestResource::create(['name' => 'resource']);
 
@@ -42,7 +35,7 @@ class FacadeTest extends TestCase
 
 	public function testAccessAllowedWhenUserAllowed()
 	{
-		$user = User::create(['name' => 'user']);
+		$user = TestUser::create(['name' => 'user']);
 		$perm = Permission::create(['name' => 'permission']);
 		$res = TestResource::create(['name' => 'resource']);
 

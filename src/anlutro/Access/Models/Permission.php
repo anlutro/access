@@ -10,6 +10,7 @@
 namespace anlutro\Access\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Permission model
@@ -35,9 +36,7 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
 	/**
-	 * Timestamps are not saved on this model.
-	 *
-	 * @var boolean
+	 * {@inheritdoc}
 	 */
 	public $timestamps = false;
 
@@ -46,11 +45,11 @@ class Permission extends Model
 	 * includes users where the permission is denied as well as users where the
 	 * permission is allowed.
 	 *
-	 * @return mixed
+	 * @return BelongsToMany
 	 */
 	public function users()
 	{
-		return $this->belongsToMany(Config::get('auth.model', 'anlutro\Access\Models\User'), 'user_permission');
+		return $this->belongsToMany(Config::get('auth.model', 'anlutro\Access\Models\User'), 'user_permission', 'permission_id', 'user_id');
 	}
 
 	/**
@@ -58,11 +57,11 @@ class Permission extends Model
 	 * roles where the permission is denied as well as roles where the
 	 * permission is allowed.
 	 *
-	 * @return mixed
+	 * @return BelongsToMany
 	 */
 	public function roles()
 	{
-		return $this->belongsToMany('anlutro\Access\Models\Role', 'role_permission');
+		return $this->belongsToMany('anlutro\Access\Models\Role', 'role_permission', 'permission_id', 'role_id');
 	}
 
 	/**

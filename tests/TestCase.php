@@ -10,6 +10,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Config;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -37,6 +38,9 @@ class TestCase extends PHPUnit_Framework_TestCase
 		$this->tearDownFacades();
 
 		Model::unguard();
+		Config::shouldReceive('get')
+			->with('auth.model', Mockery::any())
+			->andReturn('TestUser');
 	}
 
 	public function tearDown()
@@ -64,5 +68,6 @@ class TestCase extends PHPUnit_Framework_TestCase
 	{
 		Facade::setFacadeApplication(null);
 		Facade::clearResolvedInstances();
+		Mockery::close();
 	}
 }

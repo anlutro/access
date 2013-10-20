@@ -7,11 +7,11 @@
  * @package   anlutro/access
  */
 
-use anlutro\Access\Models\Resource;
+use anlutro\Access\Models\User;
 
-class TestResource extends Resource
+class TestUser extends User
 {
-	protected $table = 'test_resources';
+	protected $table = 'test_users';
 
 	public $timestamps = false;
 }

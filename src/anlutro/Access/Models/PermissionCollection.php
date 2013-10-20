@@ -12,8 +12,15 @@ namespace anlutro\Access\Models;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Contracts\ArrayableInterface;
 
+/**
+ * Custom collection object for Permission objects for some extra control and
+ * more efficient merging.
+ */
 class PermissionCollection extends \Illuminate\Database\Eloquent\Collection
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public function __construct(array $models = array())
 	{
 		if ($models) {
@@ -31,9 +38,11 @@ class PermissionCollection extends \Illuminate\Database\Eloquent\Collection
 	}
 
 	/**
-	 * Override the merge method to allow for some more advanced logic.
-	 *
-	 * @param  PermissionCollection $new
+	 * Custom merge function for custom functionality.
+	 * 
+	 * @param  Collection $new
+	 * 
+	 * @return $this
 	 */
 	public function merge($new)
 	{
@@ -59,10 +68,14 @@ class PermissionCollection extends \Illuminate\Database\Eloquent\Collection
 
 			// else do nothing.
 		}
+
+		return $this;
 	}
 
 	/**
 	 * Overwrite the add method to prevent duplicates.
+	 * 
+	 * @param  $model mixed
 	 */
 	public function add($model)
 	{

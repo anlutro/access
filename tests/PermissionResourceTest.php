@@ -8,7 +8,6 @@
  */
 
 use anlutro\Access\Models\Role;
-use anlutro\Access\Models\User;
 use anlutro\Access\Models\Permission;
 
 class PermissionResourceTest extends TestCase

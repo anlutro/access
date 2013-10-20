@@ -14,14 +14,13 @@ use anlutro\Access\Interfaces\ResourceInterface;
 use anlutro\Access\Models\Permission;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Trait that can be applied to subject models - users, roles etc.
+ */
 trait Subject
 {
 	/**
-	 * Add a permission to the object with allow = true.
-	 *
-	 * @param  Permission $permission
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function allowPermission(Permission $permission)
 	{
@@ -38,11 +37,7 @@ trait Subject
 	}
 
 	/**
-	 * Add a permission to the object with allow = false.
-	 *
-	 * @param  Permission $permission
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function denyPermission(Permission $permission)
 	{
@@ -59,11 +54,7 @@ trait Subject
 	}
 
 	/**
-	 * Reset permissions. Deletes all pivot table entries for this object.
-	 *
-	 * @param  Permission $permission
-	 *
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function resetPermission(Permission $permission)
 	{
@@ -72,11 +63,11 @@ trait Subject
 	}
 
 	/**
-	 * Get a permission from the subject.
-	 *
-	 * @param  Permission $permission [description]
-	 *
-	 * @return boolean                [description]
+	 * Get a specific permission from the subject.
+	 * 
+	 * @param  Permission $permission
+	 * 
+	 * @return Permission
 	 */
 	public function getPermission(Permission $permission)
 	{
@@ -85,12 +76,7 @@ trait Subject
 	}
 
 	/**
-	 * Check if the user/role has access to an action on a resource.
-	 *
-	 * @param  string   $action
-	 * @param  ResourceInterface $resource
-	 *
-	 * @return boolean
+	 * {@inheritdoc}
 	 */
 	public function hasAccessTo($action, ResourceInterface $resource)
 	{

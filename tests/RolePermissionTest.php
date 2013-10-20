@@ -8,7 +8,6 @@
  */
 
 use anlutro\Access\Models\Role;
-use anlutro\Access\Models\User;
 use anlutro\Access\Models\Permission;
 
 class RolePermissionTest extends TestCase
@@ -20,6 +19,7 @@ class RolePermissionTest extends TestCase
 		$role->allowPermission($perm);
 
 		$this->assertTrue($role->permissions->contains($perm->getKey()));
+		$this->assertTrue($perm->roles->contains($role->getKey()));
 		$this->assertTrue($role->permissions->first()->allow);
 	}
 
@@ -30,6 +30,18 @@ class RolePermissionTest extends TestCase
 		$role->denyPermission($perm);
 
 		$this->assertTrue($role->permissions->contains($perm->getKey()));
+		$this->assertTrue($perm->roles->contains($role->getKey()));
 		$this->assertFalse($role->permissions->first()->allow);
+	}
+
+	public function testResetPermission()
+	{
+		$role = Role::create(['name' => 'role']);
+		$perm = Permission::create(['name' => 'permission']);
+		$role->allowPermission($perm);
+		$role->resetPermission($perm);
+
+		$this->assertFalse($role->permissions->contains($perm->getKey()));
+		$this->assertFalse($perm->roles->contains($role->getKey()));
 	}
 }

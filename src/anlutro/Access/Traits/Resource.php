@@ -12,6 +12,9 @@ namespace anlutro\Access\Traits;
 use anlutro\Access\Models\Permission;
 use anlutro\Access\Models\PermissionCollection;
 
+/**
+ * Trait that can be applied to resource models.
+ */
 trait Resource
 {
 	/**
@@ -30,9 +33,7 @@ trait Resource
 	}
 
 	/**
-	 * Get the merged permissions for the resource.
-	 *
-	 * @return PermissionCollection
+	 * {@inheritdoc}
 	 */
 	public function mergedPermissions()
 	{
@@ -44,9 +45,7 @@ trait Resource
 	}
 
 	/**
-	 * Get the permissions required to execute a certain action on the resource.
-	 *
-	 * @param  string $action
+	 * {@inheritdoc}
 	 */
 	public function permissionsRequiredTo($action)
 	{
@@ -62,10 +61,7 @@ trait Resource
 	}
 
 	/**
-	 * Add a permission required to do a certain action with this resource.
-	 *
-	 * @param string     $action
-	 * @param Permission $permission
+	 * {@inheritdoc}
 	 */
 	public function addPermissionTo($action, Permission $permission)
 	{
@@ -73,12 +69,7 @@ trait Resource
 	}
 
 	/**
-	 * Remove a permission required to do a certain action with this resource.
-	 *
-	 * @param  string     $action
-	 * @param  Permission $permission
-	 *
-	 * @return int
+	 * {@inheritdoc}
 	 */
 	public function removePermissionTo($action, Permission $permission = null)
 	{
@@ -90,14 +81,11 @@ trait Resource
 		if ($permission !== null)
 			$query->where('permission_id', $permission->getKey());
 
-		return $query->delete();
+		$query->delete();
 	}
 
 	/**
-	 * Check if a permission is required to do an action on this resource.
-	 *
-	 * @param  string     $action     
-	 * @param  Permission $permission 
+	 * {@inheritdoc}
 	 */
 	public function requiresPermissionTo($action, Permission $permission)
 	{
@@ -114,10 +102,7 @@ trait Resource
 	}
 
 	/**
-	 * Add a permission required to do an action on all resources of this type.
-	 *
-	 * @param string     $action     
-	 * @param Permission $permission 
+	 * {@inheritdoc}
 	 */
 	public static function addGlobalPermissionTo($action, Permission $permission)
 	{
@@ -130,11 +115,7 @@ trait Resource
 	}
 
 	/**
-	 * Remove all permissions required to do an action on all resources of this
-	 * type, or remove a specific permission.
-	 *
-	 * @param  string     $action     
-	 * @param  Permission $permission  optional
+	 * {@inheritdoc}
 	 */
 	public static function removeGlobalPermissionTo($action, Permission $permission = null)
 	{
@@ -149,14 +130,11 @@ trait Resource
 			$query->where('permission_id', $permission->getKey());
 		}
 
-		return $query->delete();
+		$query->delete();
 	}
 
 	/**
-	 * Set the global permission(s) required for an action on a resource type.
-	 *
-	 * @param string $action
-	 * @param PermissionCollection $permissions
+	 * {@inheritdoc}
 	 */
 	public static function setGlobalPermissionsTo($action, PermissionCollection $permissions)
 	{
@@ -165,16 +143,10 @@ trait Resource
 		foreach ($permissions as $permission) {
 			static::addGlobalPermissionTo($action, $permission);
 		}
-
-		return true;
 	}
 
 	/**
-	 * Get the permission(s) required for an action on this resource type.
-	 *
-	 * @param  string $action
-	 *
-	 * @return PermissionCollection
+	 * {@inheritdoc}
 	 */
 	public static function globalPermissionsRequiredTo($action)
 	{

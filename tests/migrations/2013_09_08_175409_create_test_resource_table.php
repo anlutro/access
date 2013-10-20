@@ -20,7 +20,7 @@ class CreateTestResourceTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('test_resource', function($t) {
+		Schema::create('test_resources', function($t) {
 			$t->increments('id');
 			$t->string('name');
 		});
@@ -33,7 +33,7 @@ class CreateTestResourceTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('test_resource');
+		Schema::drop('test_resources');
 	}
 
 }

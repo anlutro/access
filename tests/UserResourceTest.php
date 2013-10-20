@@ -8,7 +8,6 @@
  */
 
 use anlutro\Access\Models\Role;
-use anlutro\Access\Models\User;
 use anlutro\Access\Models\Permission;
 
 class UserResourceTest extends TestCase
@@ -16,7 +15,7 @@ class UserResourceTest extends TestCase
 	protected function createFakes()
 	{
 		return [
-			User::create(['name' => 'user']),
+			TestUser::create(['name' => 'user']),
 			Role::create(['name' => 'role']),
 			Permission::create(['name' => 'permission']),
 			TestResource::create(['name' => 'resource']),
