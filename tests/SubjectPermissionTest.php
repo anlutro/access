@@ -93,6 +93,31 @@ class UserPermissionTest extends TestCase
 		$this->resetSubjectPermission($role, $perm);
 	}
 
+	protected function overwriteSubjectPermission($subject, $perm)
+	{
+		$subject->allowPermission($perm);
+		$subject->denyPermission($perm);
+		$subjPerm = $subject->permissions->find($perm->getKey());
+		$this->assertFalse($subjPerm->allow);
+		$subject->allowPermission($perm);
+		$subjPerm = $subject->permissions->find($perm->getKey());
+		$this->assertTrue($subjPerm->allow);
+	}
+
+	public function testOverwriteUserPermission()
+	{
+		$user = TestUser::create(['name' => 'user']);
+		$perm = Permission::create(['name' => 'permission']);
+		$this->overwriteSubjectPermission($user, $perm);
+	}
+
+	public function testOverwriteRolePermission()
+	{
+		$role = role::create(['name' => 'user']);
+		$perm = Permission::create(['name' => 'permission']);
+		$this->overwriteSubjectPermission($role, $perm);
+	}
+
 	/**
 	 * @expectedException RuntimeException
 	 */
