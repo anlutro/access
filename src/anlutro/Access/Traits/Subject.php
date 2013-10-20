@@ -25,14 +25,16 @@ trait Subject
 	 */
 	public function allowPermission(Permission $permission)
 	{
-		$this->permissions()
-			->attach($permission, ['allow' => true]);
+		$existing = $this->permissions->find($permission->getKey());
 
-		// we need to unset the relationship "cache" to make sure the permissions
-		// are updated properly.
-		// @todo figure out a way to just add $permission to the colleciton
-		if (isset($this->permissions))
+		if ($existing) {
+			$existing->pivot->allow = true;
+			$existing->pivot->save();
+		} else {
+			$this->permissions()
+				->attach($permission, ['allow' => true]);
 			unset($this->permissions);
+		}
 	}
 
 	/**
@@ -44,13 +46,16 @@ trait Subject
 	 */
 	public function denyPermission(Permission $permission)
 	{
-		$this->permissions()
-			->attach($permission, ['allow' => false]);
+		$existing = $this->permissions->find($permission->getKey());
 
-		if (isset($this->permissions))
-			$this->permissions->filter(function($item) use($permission) {
-				return ($item->getKey() != $permission->getKey());
-			});
+		if ($existing) {
+			$existing->pivot->allow = false;
+			$existing->pivot->save();
+		} else {
+			$this->permissions()
+				->attach($permission, ['allow' => false]);
+			unset($this->permissions);
+		}
 	}
 
 	/**
