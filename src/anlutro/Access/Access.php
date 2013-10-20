@@ -9,14 +9,18 @@
 
 namespace anlutro\Access;
 
+use anlutro\Access\Interfaces\ResourceInterface;
 use Illuminate\Support\Facades\Auth;
 
 class Access
 {
 	public static function allowed($action, ResourceInterface $resource)
 	{
-		if (!Auth::check()) return false;
-		return Auth::user()->hasAccessTo($action, $resource);
+		if (Auth::check()) {
+			return Auth::user()->hasAccessTo($action, $resource);
+		} else {
+			return $resource->permissionsRequiredTo($action)->count() <= 0;
+		}
 	}
 
 	public static function denied($action, ResourceInterface $resource)

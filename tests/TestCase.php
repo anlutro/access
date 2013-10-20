@@ -8,6 +8,8 @@
  */
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Facade;
 
 class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -24,21 +26,43 @@ class TestCase extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
+		$this->setUpSchemaFacade();
+
 		foreach($this->migrations as $class) {
 			$migration = new $class;
 			$migration->up();
 			$migration = null;
 		}
 
+		$this->tearDownFacades();
+
 		Model::unguard();
 	}
 
 	public function tearDown()
 	{
+		$this->setUpSchemaFacade();
+
 		foreach($this->migrations as $class) {
 			$migration = new $class;
 			$migration->down();
 			$migration = null;
 		}
+
+		$this->tearDownFacades();
+	}
+
+	protected function setUpSchemaFacade()
+	{
+		// I'm sorry
+		global $capsule;
+		$fakeapp = array('db' => $capsule);
+		Facade::setFacadeApplication($fakeapp);
+	}
+
+	protected function tearDownFacades()
+	{
+		Facade::setFacadeApplication(null);
+		Facade::clearResolvedInstances();
 	}
 }

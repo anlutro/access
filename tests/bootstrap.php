@@ -1,4 +1,12 @@
 <?php
+/**
+ * Access - Laravel 4 RBAC
+ *
+ * @author    Andreas Lutro <anlutro@gmail.com>
+ * @license   http://opensource.org/licenses/MIT
+ * @package   anlutro/access
+ */
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/TestCase.php';
 
@@ -22,14 +30,5 @@ $capsule->addConnection([
 	'prefix'    => '',
 ]);
 
-// Make this Capsule instance available globally via static methods... (optional)
 $capsule->setAsGlobal();
-
-// Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
 $capsule->bootEloquent();
-
-class_alias('Illuminate\Database\Capsule\Manager', 'DB');
-
-$fakeapp = array();
-$fakeapp['db'] = $capsule;
-Illuminate\Support\Facades\Schema::setFacadeApplication($fakeapp);
