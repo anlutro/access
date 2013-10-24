@@ -8,13 +8,15 @@ I wrote this with the intention of using it on small systems with a low number o
 
 ## Contribution
 
-Bug reports, suggestions and code improvements are highly welcome. Use the github issue system! If you just want to have a chat, look for me in #laravel on freenode.
+Bug reports, feature suggestions and code improvements are highly welcome. If you make a pull request, do make sure that your changes pass the unit tests.
+
+Use the github issue system! If you just want to have a chat, look for me in #laravel on freenode.
 
 ## Installation
 
 ### Requirements
-PHP 5.4 or higher
-Laravel 4.1 or higher
+- PHP 5.4 or higher
+- Laravel 4.1 or higher
 
 ### Install
 `composer require anlutro/access`
@@ -62,23 +64,34 @@ $lowPermission = Permission::create(['name' => 'Normal Permission']);
 $highPermission = Permission::create(['name' => 'High Level Permission']);
 ```
 
-Then, let's assign some permissions to actions on one of our resource models.
+Then, let's assign some permissions to actions on one of our resource models. Resource actions with no permissions assigned to them are allowed by default, so be careful.
 
 ```php
 MyResource::addGlobalPermissionTo('show', $lowPermission);
 MyResource::addGlobalPermissionTo('create', $lowPermission);
 MyResource::addGlobalPermissionTo('create', $highPermission);
+// MyResource::removeGlobalPermissionTo('create', $highPermission);
 ```
 
-Let's create a couple of roles. This step is optional, permissions can be added to users directly if you like.
+You can also assign permissions required on specific resources.
+
+```php
+$resource = MyResource::first();
+$res->addPermissionTo('create', $superHighPermission);
+// $res->removePermissionTo('create', $superHighPermission);
+```
+
+Let's create a couple of roles. This step is optional, permissions can be added to users directly if you like - the syntax is exactly the same.
 
 ```php
 use anlutro\Access\Models\Role;
 $userRole = Role::create(['name' => 'User Role']);
-$userRole->addPermission($lowPermission);
 $adminRole = Role::create(['name' => 'Admin Role']);
+$bannedRole = Role::create(['name' => 'Banned']);
+$userRole->addPermission($lowPermission);
 $adminRole->addPermission($lowPermission);
 $adminRole->addPermission($highPermission);
+$bannedRole->denyPermission($lowPermission);
 ```
 
 Let's assign the user role to one of our users.
@@ -86,30 +99,31 @@ Let's assign the user role to one of our users.
 ```php
 $user = User::first();
 $user->addRole($userRole);
+// $user->removeRole($userRole);
 ```
 
 Now, the user should have access to show, but not create a MyResource.
 
 ```php
 $resource = MyResource::first();
-var_dump($user->hasPermissionTo('show', $resource));
+var_dump( $user->hasPermissionTo('show', $resource) );
 $resource = new MyResource;
-var_dump($user->hasPermissionTo('create', $resource));
+var_dump( $user->hasPermissionTo('create', $resource) );
 ```
 
 If we assign the user the admin role, however, he should have access to create as well.
 
 ```php
 $user->addRole($adminRole);
-var_dump($user->hasPermissionTo('create', $resource));
+var_dump( $user->hasPermissionTo('create', $resource) );
 ```
 
 Most of the time you'll be running these checks against the currently logged in user. The Access facade has some handy shorthand functions for this.
 
 ```php
 use anlutro\Access\Access;
-Access::allowed('show', $resource);
-Access::allowed('create', $resource);
+var_dump( Access::allowed('show', $resource) );
+var_dump( Access::denied('create', $resource) );
 ```
 
 ## License
