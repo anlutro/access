@@ -30,7 +30,8 @@ trait UserSubject
 	 */
 	public function roles()
 	{
-		return $this->belongsToMany('anlutro\Access\Models\Role', 'user_role', 'user_id', 'role_id');
+		return $this->belongsToMany('anlutro\Access\Models\Role',
+			'user_role', 'user_id', 'role_id');
 	}
 
 	/**
@@ -40,7 +41,8 @@ trait UserSubject
 	 */
 	public function permissions()
 	{
-		return $this->belongsToMany('anlutro\Access\Models\Permission', 'user_permission', 'user_id', 'permission_id')
+		return $this->belongsToMany('anlutro\Access\Models\Permission',
+			'user_permission', 'user_id', 'permission_id')
 			->withPivot('allow');
 	}
 

@@ -73,7 +73,7 @@ class PermissionCollection extends \Illuminate\Database\Eloquent\Collection
 	}
 
 	/**
-	 * Overwrite the add method to prevent duplicates.
+	 * Override the add method to prevent duplicates.
 	 * 
 	 * @param  $model mixed
 	 */

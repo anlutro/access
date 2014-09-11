@@ -28,7 +28,8 @@ trait Resource
 	 */
 	public function permissions()
 	{
-		return $this->morphToMany('anlutro\Access\Models\Permission', 'resource', 'permission_resource')
+		return $this->morphToMany('anlutro\Access\Models\Permission',
+			'resource', 'permission_resource')
 			->withPivot('action');
 	}
 
