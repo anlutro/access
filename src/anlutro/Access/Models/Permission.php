@@ -49,7 +49,8 @@ class Permission extends Model
 	 */
 	public function users()
 	{
-		return $this->belongsToMany(Config::get('auth.model', 'anlutro\Access\Models\User'), 'user_permission', 'permission_id', 'user_id');
+		return $this->belongsToMany(Config::get('auth.model', 'anlutro\Access\Models\User'),
+			'user_permission', 'permission_id', 'user_id');
 	}
 
 	/**
@@ -61,7 +62,8 @@ class Permission extends Model
 	 */
 	public function roles()
 	{
-		return $this->belongsToMany('anlutro\Access\Models\Role', 'role_permission', 'permission_id', 'role_id');
+		return $this->belongsToMany('anlutro\Access\Models\Role',
+			'role_permission', 'permission_id', 'role_id');
 	}
 
 	/**
@@ -73,7 +75,7 @@ class Permission extends Model
 	public function getAllowAttribute()
 	{
 		if (!isset($this->pivot) || !isset($this->pivot->allow)) {
-			throw new \RuntimeException('Action attribute only available on user/role permissions');
+			throw new \RuntimeException('"allow" attribute only available on user/role permissions');
 		}
 
 		return (boolean) $this->pivot->allow;
@@ -88,7 +90,7 @@ class Permission extends Model
 	public function getActionAttribute()
 	{
 		if (!isset($this->pivot) || !isset($this->pivot->action)) {
-			throw new \RuntimeException('Action attribute only available on resource permissions');
+			throw new \RuntimeException('"action" attribute only available on resource permissions');
 		}
 
 		return $this->pivot->action;
