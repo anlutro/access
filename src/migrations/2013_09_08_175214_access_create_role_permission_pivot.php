@@ -10,7 +10,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserRolePivot extends Migration
+class AccessCreateRolePermissionPivot extends Migration
 {
 
 	/**
@@ -20,11 +20,13 @@ class CreateUserRolePivot extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('user_role', function($t) {
-			$t->integer('user_id')
-				->unsigned();
+		Schema::create('role_permission', function($t) {
 			$t->integer('role_id')
 				->unsigned();
+			$t->integer('permission_id')
+				->unsigned();
+			$t->boolean('allow')
+				->default(true);
 		});
 	}
 
@@ -35,7 +37,7 @@ class CreateUserRolePivot extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('user_role');
+		Schema::drop('role_permission');
 	}
 
 }

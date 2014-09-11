@@ -10,7 +10,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionResourcePivot extends Migration
+class AccessCreateRoleTable extends Migration
 {
 
 	/**
@@ -20,14 +20,9 @@ class CreatePermissionResourcePivot extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('permission_resource', function($t) {
-			$t->integer('permission_id')
-				->unsigned();
-			$t->string('action', 64);
-			$t->integer('resource_id')
-				->unsigned()
-				->nullable();
-			$t->string('resource_type', 128);
+		Schema::create('roles', function($t) {
+			$t->increments('id');
+			$t->string('name', 128);
 		});
 	}
 
@@ -38,7 +33,7 @@ class CreatePermissionResourcePivot extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('permission_resource');
+		Schema::drop('roles');
 	}
 
 }

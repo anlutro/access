@@ -10,7 +10,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserPermissionPivot extends Migration
+class AccessCreateUserPermissionPivot extends Migration
 {
 
 	/**

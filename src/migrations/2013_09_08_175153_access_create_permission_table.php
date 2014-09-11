@@ -10,7 +10,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoleTable extends Migration
+class AccessCreatePermissionTable extends Migration
 {
 
 	/**
@@ -20,7 +20,7 @@ class CreateRoleTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('roles', function($t) {
+		Schema::create('permissions', function($t) {
 			$t->increments('id');
 			$t->string('name', 128);
 		});
@@ -33,7 +33,7 @@ class CreateRoleTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('roles');
+		Schema::drop('permissions');
 	}
 
 }
