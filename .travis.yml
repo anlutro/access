@@ -9,7 +9,6 @@ php:
 env:
   - LVERSION="4.1.*"
   - LVERSION="4.2.*"
-  - LVERSION="4.3.*@dev"
 
 before_install:
   - composer require illuminate/database:${LVERSION} illuminate/support:${LVERSION} --no-update
