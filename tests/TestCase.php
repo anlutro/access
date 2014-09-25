@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Config;
 class TestCase extends PHPUnit_Framework_TestCase
 {
 	private $migrations = [
-		'CreateRoleTable',
-		'CreatePermissionTable',
-		'CreateUserRolePivot',
-		'CreateUserPermissionPivot',
-		'CreateRolePermissionPivot',
-		'CreatePermissionResourcePivot',
+		'AccessCreateRoleTable',
+		'AccessCreatePermissionTable',
+		'AccessCreateUserRolePivot',
+		'AccessCreateUserPermissionPivot',
+		'AccessCreateRolePermissionPivot',
+		'AccessCreatePermissionResourcePivot',
 		'CreateUserTable',
 		'CreateTestResourceTable',
 	];
